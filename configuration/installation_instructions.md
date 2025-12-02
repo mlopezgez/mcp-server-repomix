@@ -50,100 +50,13 @@ If you have Repomix installed in a custom location, you can specify the path:
 }
 ```
 
-## Accessing Private Repositories
+## Remote Repositories
 
-Repomix uses your **locally installed Git** for authentication when accessing remote repositories. This means it automatically uses whatever authentication method you've already configured with Git.
+Repomix can pack remote repositories by providing a repository URL using either:
+- **HTTPS**: `https://github.com/user/repo`
+- **SSH**: `git@github.com:user/repo.git`
 
-### Authentication Methods
-
-To access private repositories, configure Git authentication using one of these standard methods:
-
-#### Option 1: SSH Keys (Recommended)
-
-1. Generate an SSH key if you don't have one:
-   ```bash
-   ssh-keygen -t ed25519 -C "your_email@example.com"
-   ```
-
-2. Add your SSH key to GitHub/GitLab:
-   - **GitHub**: https://github.com/settings/keys
-   - **GitLab**: https://gitlab.com/-/profile/keys
-
-3. Test your connection:
-   ```bash
-   ssh -T git@github.com
-   # or
-   ssh -T git@gitlab.com
-   ```
-
-4. Use SSH URLs with Repomix:
-   ```bash
-   repomix --remote git@github.com:user/private-repo.git
-   ```
-
-#### Option 2: Git Credential Manager
-
-Git Credential Manager securely stores your credentials:
-
-**macOS:**
-```bash
-git config --global credential.helper osxkeychain
-```
-
-**Windows:**
-```bash
-git config --global credential.helper manager
-```
-
-**Linux:**
-```bash
-git config --global credential.helper store
-```
-
-When you clone or access a private repository via HTTPS for the first time, Git will prompt for credentials and store them.
-
-#### Option 3: Personal Access Tokens (HTTPS)
-
-For HTTPS access with tokens:
-
-**GitHub:**
-1. Generate a token at: https://github.com/settings/tokens
-2. Required scopes: `repo` (for private repos)
-3. Clone with token in URL:
-   ```bash
-   git clone https://TOKEN@github.com/user/private-repo.git
-   ```
-
-**GitLab:**
-1. Generate a token at: https://gitlab.com/-/profile/personal_access_tokens
-2. Required scopes: `read_api`, `read_repository`
-3. Clone with token in URL:
-   ```bash
-   git clone https://oauth2:TOKEN@gitlab.com/user/private-repo.git
-   ```
-
-### Verifying Authentication
-
-To verify your Git authentication is working:
-
-```bash
-# Test cloning a private repository
-git clone <private-repo-url>
-
-# If successful, Repomix will also be able to access it
-repomix --remote <private-repo-url>
-```
-
-### Security Best Practices
-
-⚠️ **Important Notes:**
-
-- **SSH keys are recommended** for better security
-- Never commit credentials to version control
-- Use tokens with minimal required scopes
-- Rotate tokens regularly
-- Store credentials securely using Git credential helpers
-- Repomix inherits all Git credentials automatically
+Simply pass the repository URL to the pack repository tool.
 
 ## Usage
 
@@ -189,15 +102,7 @@ If you encounter permission errors:
 2. Check that Repomix can execute: `which repomix`
 3. Verify Node.js permissions
 
-### Private Repository Access Issues
 
-If you can't access private repositories:
-
-1. Verify Git authentication works: `git clone <private-repo-url>`
-2. Check your SSH keys are added: `ssh -T git@github.com`
-3. Verify credential helper is configured: `git config --global credential.helper`
-4. For HTTPS, ensure credentials are stored correctly
-5. Check repository permissions (you need at least read access)
 
 ## Learn More
 

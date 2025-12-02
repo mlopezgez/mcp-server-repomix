@@ -89,50 +89,9 @@ If you have Repomix installed in a custom location:
 }
 ```
 
-## Accessing Private Repositories
+## Remote Repositories
 
-Repomix uses your **locally installed Git** for authentication. To access private repositories, configure Git authentication using standard methods:
-
-### Quick Setup
-
-**Option 1: SSH Keys (Recommended)**
-```bash
-# Generate SSH key
-ssh-keygen -t ed25519 -C "your_email@example.com"
-
-# Add to GitHub: https://github.com/settings/keys
-# Add to GitLab: https://gitlab.com/-/profile/keys
-
-# Test connection
-ssh -T git@github.com
-```
-
-**Option 2: Git Credential Manager**
-```bash
-# macOS
-git config --global credential.helper osxkeychain
-
-# Windows
-git config --global credential.helper manager
-
-# Linux
-git config --global credential.helper store
-```
-
-**Option 3: Personal Access Tokens (HTTPS)**
-- GitHub: Generate at https://github.com/settings/tokens (scope: `repo`)
-- GitLab: Generate at https://gitlab.com/-/profile/personal_access_tokens (scopes: `read_api`, `read_repository`)
-
-### Verification
-
-Test your Git authentication:
-```bash
-git clone <private-repo-url>
-```
-
-If Git authentication works, Repomix will automatically use the same credentials.
-
-For detailed setup instructions, see the [installation guide](configuration/installation_instructions.md).
+Repomix can pack remote repositories by providing a repository URL. Simply pass the repository URL using either HTTPS (e.g., `https://github.com/user/repo`) or SSH (e.g., `git@github.com:user/repo.git`) to the pack repository tool.
 
 ## Usage
 
